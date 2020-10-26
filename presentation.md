@@ -190,12 +190,12 @@ data-transition="fade" -->
 ---
 
 <div class="r-stack">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide1.jpg" style="width:100%">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide2.jpg" style="width:100%">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide3.jpg" style="width:100%">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide4.jpg" style="width:100%">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide5.jpg" style="width:100%">
-<img class="fragment" data-src="./images/FoodTruckModelDiagram/Slide6.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide1.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide2.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide3.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide4.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide5.jpg" style="width:100%">
+<img class="fragment" data-src="/images/FoodTruckModelDiagram/Slide6.jpg" style="width:100%">
 </div>
 
 ---
