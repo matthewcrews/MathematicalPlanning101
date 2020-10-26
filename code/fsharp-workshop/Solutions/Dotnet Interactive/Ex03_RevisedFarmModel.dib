@@ -1,0 +1,140 @@
+#!markdown
+
+# Revised Farm Model
+
+#!markdown
+
+## Import Flips
+
+#!fsharp
+
+// Import Flips and open System, Flips, and Flips.Types
+#r "nuget: Flips, 2.0.1"
+
+#!markdown
+
+## Open Modules
+
+#!fsharp
+
+open System
+open Flips
+open Flips.Types
+
+#!markdown
+
+NOTE: If at any point you would like to view the contents of a variable copy paste the following code and replace the variable_name
+print "%A" variable_name
+
+#!fsharp
+
+// Define the set of animals you are working with
+let animals = ["cows"; "pigs"; "chickens"]
+
+// Dictionary of Revenue indexed by Animal Type
+let revenue = ["cows", 100.0; "pigs", 50.0; "chickens", 8.0] |> Map.ofList
+
+// Dictionary of Pasture required per animal indexed by Animal Type
+let pasture = ["cows",1.0; "pigs",0.5; "chickens",0.0] |> Map.ofList
+
+// Dictionary of Feed required per animal indexed by Animal Type
+let feed = ["cows",0.0; "pigs",1.0; "chickens",0.1] |> Map.ofList
+
+// Dictionary of the Labor required per animal indexed by Animal Type
+let labor = ["cows",9.5; "pigs",8.0; "chickens",0.0] |> Map.ofList
+
+// Constants which determine the limits on our resources
+let total_pasture = 1000.0
+let total_feed = 100.0
+let total_labor = 7200.0
+
+#!markdown
+
+## Step 1: Create the Decision Variables
+
+#!markdown
+
+The DecisionBuilder below is used to create a List of Decision Variables which consists of DecisionName and DecisionTYpe
+
+#!fsharp
+
+// Create decision variables for all of the animals
+let animalDecs =
+    DecisionBuilder "NumberOf" {
+        for animal in animals -> Continuous (0.0, infinity)
+    }
+   |> Map.ofSeq
+
+#!markdown
+
+## Step 2: Create the Objective
+
+#!fsharp
+
+// Create an objective expression
+let objectiveExpression = [ for KeyValue(animal, decVar) in animalDecs -> (revenue.[animal] * decVar)] |> List.sum
+    
+// Create the objective
+let objective = Objective.create "MaximizeRevenue" Maximize objectiveExpression
+
+#!markdown
+
+## Step 3: Add Constraints
+
+#!fsharp
+
+// Add the constraint for the total amount of pasture available
+let pastureEx = [ for animal in animals -> (pasture.[animal]*animalDecs.[animal]) ] |> List.sum
+let maxPasture = Constraint.create "MaxPasture" (pastureEx <== total_pasture)
+// Add the constraint for the total amount of feed available
+let feedEx = [ for animal in animals -> (feed.[animal]*animalDecs.[animal]) ] |> List.sum
+let maxFeed = Constraint.create "MaxFeed" (feedEx <== total_feed)
+// Add the constraint for the total amount of labor available
+let laborEx = [ for animal in animals -> (labor.[animal]*animalDecs.[animal]) ] |> List.sum
+let maxLabor = Constraint.create "MaxLabor" (laborEx <== total_labor)
+
+#!markdown
+
+## Step 4: Create the Model
+
+#!fsharp
+
+// Create the model and add the constraints
+let model = 
+    Model.create objective
+    |> Model.addConstraint maxPasture
+    |> Model.addConstraint maxFeed
+    |> Model.addConstraint maxLabor
+
+#!markdown
+
+## Step 5: Create the Settings and Solve
+
+#!fsharp
+
+// Create the solver settings
+let settings = {
+        SolverType = SolverType.CBC
+        MaxDuration = 10_000L
+        WriteLPFile = None
+    }
+
+#!fsharp
+
+// Solve the model and save the result
+let result = Solver.solve settings model
+
+#!markdown
+
+## Step 6: Print the Results
+
+#!fsharp
+
+printfn "--Results--"
+// Print the results of the solver
+match result with
+    | Suboptimal msg -> printfn "Unable to solve. Error %s" msg
+    | Optimal solution ->
+        for (decision, value) in solution.DecisionResults |> Map.toSeq do
+            let (DecisionName name) = decision.Name
+            printfn "Decision: %s\tValue: %f" name value    

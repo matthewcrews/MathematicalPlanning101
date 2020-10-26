@@ -1,0 +1,186 @@
+#!markdown
+
+# Taco Truck Problem
+
+#!markdown
+
+## Import Flips Library
+
+Import the Flips library by typing `#r "nuget: Flips, 2.0.1"`.
+
+#!fsharp
+
+//import Flips below
+#r "nuget: Flips, 2.0.1"
+
+#!markdown
+
+## Open Modules
+
+Open `System`, `Flips`, and `Flips.Types` to use the contents of those modules.
+
+#!fsharp
+
+open System
+open Flips
+open Flips.Types
+
+#!markdown
+
+## Step 1: Create Decision Variables
+
+Create decision variables using the `Decision` module, namely the `Decision.createContinuous` function. This function takes a `variable name`, `lower bound`, and `upper bound` as parameters.
+
+```fsharp
+let numberOfHotdogs = Decision.createContinuous "NumberofHotdogs" 0.0 infinity
+```
+
+#!fsharp
+
+// Create a decision variable for the number of burgers below
+let numberOfBurgers = Decision.createContinuous "NumberOfBurgers" 0.0 infinity
+// Create a decision variable for the number of tacos below
+let numberOfTacos = Decision.createContinuous "NumberOfTacos" 0.0 infinity
+
+#!markdown
+
+## Step 2: Create the Objective
+
+Create an objective expression using your variables using your decision variables and the parameters given. Then create an objective based on that using `Objective.create`. This function takes the `objective name`, `goal` (Maximize or Minimize), and `objective expression` as parameters.
+
+```fsharp
+let objectiveExpression = 1.50*numberOfHamburgers+1.0*numberOfTacos
+let objective = Objective.create "MaximizeRevenue" Maximize objectiveExpression
+```
+
+*or*
+
+```fsharp
+let objective = Objective.create "MaximizeRevenue" Maximize (1.50*numberOfHamburgers+1.0*numberOfTacos)
+```
+
+#!fsharp
+
+// Create an objective expression here
+let objectiveExpression = 2.0 * numberOfBurgers + 1.0 * numberOfTacos
+
+// Create an objective here
+let objective = Objective.create "MaximizeRevenue" Maximize objectiveExpression
+
+#!markdown
+
+## Step 3: Create Constraints
+
+Create constraints based on those given in the problem using `Constraint.Create`. This function takes the `constraint name` and `constraint expression` as parameters.
+
+*Note*: Due to .NET standards regarding the use of `>=`, `<=`, and `=`, this library uses `>==`, `<==`, and `==` as the operators for comparison. 
+
+```fsharp
+let maxHotDogs = Constraint.Create "MaxHotDogs" (numberOfHotDogs <== hotdogBuns)
+```
+
+#!fsharp
+
+// Create a constraint for the max number of Burgers
+let maxBurgers = Constraint.create "MaxBurgers" (numberOfBurgers <== 300.0)
+// Create a constraint for the max number of Tacos
+let maxTacos = Constraint.create "MaxTacos" (numberOfTacos <== 200.0)
+// Create a constraint for the total weight
+let maxWeight = Constraint.create "MaxWeight" ((1.5*numberOfTacos+1.0*numberOfBurgers) <== 450.0)
+
+#!markdown
+
+## Step 4: Create the Model
+
+Using the `Model` module, you can create a model using `Model.create` (which takes the `objective` as a parameter). Then add the constraints using `Model.addConstraint`, passing in the `constraint`. This is all done using the pipe (`|>`) operator.
+
+```fsharp
+let model =
+    Model.create objective
+    |> Model.addConstraint maxHotDogs
+    |> Model.addConstraint maxWeight
+```
+
+**Note**: The pipe operator is an alternative way of nesting or composing functions to improve readability. The previous function written without the pipe operator would be written as follows:
+```fsharp
+let model =
+    Model.addConstraint maxWeight (Model.addConstraint maxHotDogs (Model.create objective))
+```
+
+Using the pipe operator better lays out the steps of creating a model.
+
+#!fsharp
+
+// Create the model below
+let model =
+    Model.create objective
+    |> Model.addConstraint maxBurgers
+    |> Model.addConstraint maxTacos
+    |> Model.addConstraint maxWeight
+
+#!markdown
+
+## Step 5: Create Settings for Solver and Solve
+
+To solve the model, create the settings needed to run the model using `SolverSettings`. For this problem we will use the CBC solver and allow 10 seconds (10,000 ms) for solving. There is an option to write to an LP file, but for now, specify it as `None`.
+
+```fsharp
+let settings = {
+    SolverType = SolverType.CBC
+    MaxDuration = 10_000L
+    WriteLPFile = None
+}
+```
+
+#!fsharp
+
+// Create solver settings below
+let settings = {
+    SolverType = SolverType.CBC
+    MaxDuration = 10_000L
+    WriteLPFile = None
+}
+
+#!markdown
+
+From there, run the `solve` function using the model and the solver settings.
+
+```fsharp
+let result = Solver.solve settings model
+```
+
+#!fsharp
+
+// Store result of solved model below
+let result = Solver.solve settings model
+
+#!markdown
+
+## Step 6: Print Results
+
+The value of `result` will either be `Optimal` if it found the optimal solution or `Suboptimal` if it ran out of time.
+
+```fsharp
+match result with
+| Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
+| Optimal solution ->
+    printfn "Objective Value: %f" solution.ObjectiveResult
+
+    for (decision, value) in solution.DecisionResults |> Map.toSeq do
+        let (DecisionName name) = decision.Name
+        printfn "Decision: %s\tValue: %f" name value
+```
+
+#!fsharp
+
+printfn "--Result--"
+
+// Print the results of the solver below
+match result with
+| Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
+| Optimal solution ->
+    printfn "Objective Value: %f" solution.ObjectiveResult
+
+    for (decision, value) in solution.DecisionResults |> Map.toSeq do
+        let (DecisionName name) = decision.Name
+        printfn "Decision: %s\tValue: %f" name value

@@ -1,0 +1,103 @@
+#!markdown
+
+# Farm Model
+
+#!markdown
+
+## Import Flips
+
+Import Flips and open `System`, `Flips`, and `Flips.Types`
+
+#!fsharp
+
+#r "nuget: Flips, 2.0.1"
+
+#!fsharp
+
+open System
+open Flips
+open Flips.Types
+
+#!markdown
+
+## Step 1: Create the Decision Variables
+
+#!fsharp
+
+// Create decision variables for cows, pigs, and chickens
+let numberOfCows = Decision.createContinuous "NumberOfCows" 0.0 infinity
+let numberOfPigs = Decision.createContinuous "NumberOfPigs" 0.0 infinity
+let numberOfChickens = Decision.createContinuous "NumberOfChickens" 0.0 infinity
+
+#!markdown
+
+## Step 2: Create the Objective
+
+#!fsharp
+
+// Create an objective expression
+let objectiveExpression = 100.0*numberOfCows+50.0*numberOfPigs+8.0*numberOfChickens
+// Create an objective
+let objective = Objective.create "MaximizeRevenue" Maximize objectiveExpression
+
+#!markdown
+
+## Step 3: Add Constraints
+
+#!fsharp
+
+// Add constraint for amount of Pasture
+let maxPasture = Constraint.create "MaxPasture" (1.0*numberOfCows + 0.2*numberOfPigs <== 1000.0)
+// Add constraint for amount of Feed
+let maxFeed = Constraint.create "MaxFeed" (1.0*numberOfPigs + 0.1*numberOfChickens <== 100.0)
+// Add constraint for amount of Labor
+let maxLabor = Constraint.create "MaxLabor" (9.5*numberOfCows + 8.0*numberOfPigs <== 7200.0)
+
+#!markdown
+
+## Step 4: Create the model
+
+#!fsharp
+
+// Create the model and add the constraints
+let model =
+    Model.create objective
+    |> Model.addConstraint maxPasture
+    |> Model.addConstraint maxFeed
+    |> Model.addConstraint maxLabor
+
+#!markdown
+
+## Step 5: Create the Settings and Solve
+
+#!fsharp
+
+// Create the solver settings
+let settings = {
+    SolverType = SolverType.CBC
+    MaxDuration = 10000L
+    WriteLPFile = None
+}
+
+#!fsharp
+
+// Solve the model and save the results
+let result = Solver.solve settings model
+
+#!markdown
+
+## Step 6: Print Results
+
+#!fsharp
+
+printfn "--Results--"
+// Print the results of the solver
+match result with
+| Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
+| Optimal solution ->
+    printfn "Objective Value: %f" solution.ObjectiveResult
+
+    for (decision, value) in solution.DecisionResults |> Map.toSeq do
+        let (DecisionName name) = decision.Name
+        printfn "Decision: %s\tValue: %f" name value
+    

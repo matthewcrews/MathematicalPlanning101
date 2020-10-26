@@ -1,0 +1,82 @@
+#!markdown
+
+# Farm Model
+
+#!markdown
+
+## Import Flips
+
+Import Flips and open `System`, `Flips`, and `Flips.Types`
+
+#!fsharp
+
+// Import Flips
+
+#!markdown
+
+## Import Modules
+
+#!fsharp
+
+// Open System, Flips, and Flips.Types
+
+#!markdown
+
+## Step 1: Create the Decision Variables
+
+#!fsharp
+
+// Create decision variables for cows, pigs, and chickens
+
+#!markdown
+
+## Step 2: Create the Objective
+
+#!fsharp
+
+// Create an objective expression
+
+// Create an objective
+
+#!markdown
+
+## Step 3: Add Constraints
+
+#!fsharp
+
+// Add constraint for amount of Pasture
+
+// Add constraint for amount of Feed
+
+// Add constraint for amount of Labor
+
+#!markdown
+
+## Step 4: Create the model
+
+#!fsharp
+
+// Create the model and add the constraints
+
+#!markdown
+
+## Step 5: Create the Settings and Solve
+
+#!fsharp
+
+// Create the solver settings
+
+#!fsharp
+
+// Solve the model and save the results
+
+#!markdown
+
+## Step 6: Print Results
+
+#!fsharp
+
+printfn "--Results--"
+// Print the results of the solver
+
+    

@@ -1,0 +1,102 @@
+#!markdown
+
+# Revised Farm Model
+
+#!markdown
+
+## Import Flips
+
+#!fsharp
+
+// Import Flips
+
+#!markdown
+
+## Open Modules
+
+#!fsharp
+
+// Open System, Flips, and Flips.Types
+
+#!fsharp
+
+// Define the set of animals you are working with
+let animals = ["cows"; "pigs"; "chickens"]
+
+// Dictionary of Revenue indexed by Animal Type
+let revenue = ["cows", 100.0; "pigs", 50.0; "chickens", 8.0] |> Map.ofList
+
+// Dictionary of Pasture required per animal indexed by Animal Type
+let pasture = ["cows",1.0; "pigs",0.5; "chickens",0.0] |> Map.ofList
+
+// Dictionary of Feed required per animal indexed by Animal Type
+let feed = ["cows",0.0; "pigs",1.0; "chickens",0.1] |> Map.ofList
+
+// Dictionary of the Labor required per animal indexed by Animal Type
+let labor = ["cows",9.5; "pigs",8.0; "chickens",0.0] |> Map.ofList
+
+// Constants which determine the limits on our resources
+let total_pasture = 1000.0
+let total_feed = 100.0
+let total_labor = 7200.0
+
+#!markdown
+
+## Step 1: Create the Decision Variables
+
+#!fsharp
+
+// Create decision variables for all of the animals
+
+#!markdown
+
+## Step 2: Create the Objective
+
+#!fsharp
+
+// Create an objective expression
+
+    
+// Create the objective
+
+#!markdown
+
+## Step 3: Add Constraints
+
+#!fsharp
+
+// Add the constraint for the total amount of pasture available
+
+// Add the constraint for the total amount of feed available
+
+// Add the constraint for the total amount of labor available
+
+#!markdown
+
+## Step 4: Create the Model
+
+#!fsharp
+
+// Create the model and add the constraints
+
+#!markdown
+
+## Step 5: Create the Settings and Solve
+
+#!fsharp
+
+// Create the solver settings
+
+#!fsharp
+
+// Solve the model and save the result
+
+#!markdown
+
+## Step 6: Print the Results
+
+#!fsharp
+
+printfn "--Results--"
+// Print the results of the solver
+  
