@@ -14,6 +14,7 @@
     <Compile Include="02-FarmModel.fs" />
     <Compile Include="03-RevisedFarmModel.fs" />
     <Compile Include="04-CoffeeModel.fs" />
+    <Compile Include="04B-CoffeeModel.fs" />
     <Compile Include="05-PowerPlanning.fs" />
   </ItemGroup>
 

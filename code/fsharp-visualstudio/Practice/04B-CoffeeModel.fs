@@ -75,19 +75,25 @@ let solve () =
     let roasterDecs = 
         DecisionBuilder "BuildRoaster" {
             for location in locations -> Boolean 
-        } |> SMap
+        } |> Map.ofSeq
 
     // Create variables to indicate whether or not to build a Warehouse at a given location
     let warehouseDecs =
         DecisionBuilder "BuildWarehouse" {
             for location in locations -> Boolean
-        } |> SMap
+        } |> Map.ofSeq
 
     // Create an expression for the cost of Warehouses
-    let warehouseCostExpr = sum (warehouseCost .* warehouseDecs)
+    let warehouseCostExpr = // TODO: Refactor
+      [for location in locations -> 
+        warehouseCost.[location] * warehouseDecs.[location]
+      ] |> List.sum
 
     // Create an expression for the cost of Roasters
-    let roasterCostExpr = sum (roasterCost .* roasterDecs)
+    let roasterCostExpr = // TODO: Refactor
+      [for location in locations -> 
+        roasterCost.[location] * roasterDecs.[location]
+      ] |> List.sum
 
     // Create a Total Cost Expr by adding the Warehouse and Roasting expressions
     let totalCostExpr = warehouseCostExpr + roasterCostExpr
@@ -96,24 +102,30 @@ let solve () =
     let objective = Objective.create "MinimizeCost" Minimize totalCostExpr
 
     // Total Roasting capacity must be greater than 30 tons
-    let roasterCapacityExpr = sum (roasterCapacity .* roasterDecs)
+    let roasterCapacityExpr = // TODO: Refactor
+      [for location in locations -> 
+        roasterCapacity.[location] * roasterDecs.[location]
+      ] |> List.sum
 
     let roasterCapacityConstraint = 
-        Constraint.create "MinRoastingCapacity" (roasterCapacityExpr >== minRoastingCapacity)
+      Constraint.create "MinRoastingCapacity" (roasterCapacityExpr >== minRoastingCapacity)
 
     // Total Warehouse size must be greater than 30000 sq. ft.
-    let warehouseCapacityExpr = sum (warehouseSize .* warehouseDecs)
+    let warehouseCapacityExpr = // TODO: Refactor
+      [for location in locations -> 
+        warehouseSize.[location] * roasterDecs.[location]
+      ] |> List.sum
 
     let warehouseCapacityConstraint = 
-        Constraint.create "MinWarehouseSpace" (warehouseCapacityExpr >== minWarehouseCapacity)
+      Constraint.create "MinWarehouseSpace" (warehouseCapacityExpr >== minWarehouseCapacity)
 
     // Create a constraint for each Location which requires a
     // Warehouse wherever a Roaster is
     let warehouseAndRoasterConstraint =
-        ConstraintBuilder "WarehouseAndRoasterCoexist" { 
-            for location in locations ->
-            roasterDecs.[location] <== warehouseDecs.[location]
-        }
+      ConstraintBuilder "WarehouseAndRoasterCoexist" { 
+        for location in locations ->
+          roasterDecs.[location] <== warehouseDecs.[location]
+      }
 
     // Create the model and add constraints
     let model = 
@@ -135,9 +147,9 @@ let solve () =
     printfn "--Results--"
     // Print the results of the solver
     match result with
-    | Optimal solution -> 
-        printfn "Objective Value: %f" solution.ObjectiveResult
-        for (decision, value) in solution.DecisionResults |> Map.toSeq do
-            let (DecisionName name) = decision.Name
-            printfn "Decision: %s\tValue: %f" name value
-    | _ -> printfn "Unable to solve."
+        | Optimal solution -> 
+            printfn "Objective Value: %f" solution.ObjectiveResult
+            for (decision, value) in solution.DecisionResults |> Map.toSeq do
+                let (DecisionName name) = decision.Name
+                printfn "Decision: %s\tValue: %f" name value
+        | _ -> printfn "Unable to solve."
