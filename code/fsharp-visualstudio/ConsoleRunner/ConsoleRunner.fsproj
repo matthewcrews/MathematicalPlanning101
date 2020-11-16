@@ -6,12 +6,22 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>NU1701;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Practice\Practice.fsproj" />
+    <ProjectReference Include="..\Solutions\Solutions.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.2" />
   </ItemGroup>
 
 </Project>

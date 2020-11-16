@@ -34,7 +34,7 @@ let solve () =
   // Create the solver settings
   let settings = {
       SolverType = SolverType.CBC
-      MaxDuration = 10000L
+      MaxDuration = 10_000L
       WriteLPFile = None
   }
 
@@ -44,10 +44,10 @@ let solve () =
   printfn "--Results--"
   // Print the results of the solver
   match result with
-  | Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
   | Optimal solution ->
       printfn "Objective Value: %f" solution.ObjectiveResult
 
       for (decision, value) in solution.DecisionResults |> Map.toSeq do
           let (DecisionName name) = decision.Name
           printfn "Decision: %s\tValue: %f" name value
+  | _ -> printfn "Unable to solve."

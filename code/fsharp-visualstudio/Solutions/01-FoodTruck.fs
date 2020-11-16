@@ -53,10 +53,10 @@ let solve () =
 
   // Print the results of the solver below
   match result with
-  | Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
   | Optimal solution ->
       printfn "Objective Value: %f" solution.ObjectiveResult
 
       for (decision, value) in solution.DecisionResults |> Map.toSeq do
           let (DecisionName name) = decision.Name
           printfn "Decision: %s\tValue: %f" name value
+  | _ -> printfn "Unable to solve."

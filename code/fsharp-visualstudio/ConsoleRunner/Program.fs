@@ -7,12 +7,20 @@ open Practice
 [<EntryPoint>]
 let main argv =
 
+    // Practice
+    //Practice.FoodTruck.solve ()
+    //Practice.FarmModel.solve ()
+    //Practice.RevisedFarmModel.solve ()
+    //Practice.CoffeeModel.solve ()
+    //Practice.PowerPlanning.solve ()
 
-    FoodTruck.solve ()
-    //FarmModel.solve ()
-    //RevisedFarmModel.solve ()
-    //CoffeeModel.solve ()
-    //PowerPlanning.solve ()
+    // Solutions
+    //Solutions.FoodTruck.solve ()
+    //Solutions.FarmModel.solve ()
+    //Solutions.RevisedFarmModel.solve ()
+    //Solutions.CoffeeModel.solve ()
+    //Solutions.CoffeeModelRevised.solve ()
+    Solutions.PowerPlanning.solve ()
 
     printfn "Hit Enter to exit..."
     let r = Console.ReadLine()

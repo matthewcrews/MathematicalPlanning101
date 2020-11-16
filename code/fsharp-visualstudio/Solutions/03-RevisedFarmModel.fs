@@ -37,7 +37,7 @@ let solve () =
   // Create an objective expression
   let objectiveExpression = 
     [ for KeyValue(animal, decVar) in animalDecs -> 
-      (revenue.[animal] * decVar)
+      revenue.[animal] * decVar
     ] |> List.sum
     
   // Create the objective
@@ -90,8 +90,8 @@ let solve () =
 
   // Print the results of the solver
   match result with
-      | Suboptimal msg -> printfn "Unable to solve. Error %s" msg
       | Optimal solution ->
           for (decision, value) in solution.DecisionResults |> Map.toSeq do
               let (DecisionName name) = decision.Name
               printfn "Decision: %s\tValue: %f" name value  
+      | _-> printfn "Unable to solve."

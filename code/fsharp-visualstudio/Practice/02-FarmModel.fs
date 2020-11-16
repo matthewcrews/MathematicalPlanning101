@@ -4,40 +4,40 @@ open Flips
 open Flips.Types
 
 let solve () =
-  // Create decision variables for cows, pigs, and chickens
 
-  // Create an objective expression
+    // Create decision variables for cows, pigs, and chickens
 
-  // Create an objective
+    // Create an objective expression
 
-
-  // Add constraint for amount of Pasture
-
-  // Add constraint for amount of Feed
-
-  // Add constraint for amount of Labor
+    // Create an objective
 
 
-  // Create the model and add the constraints
+    // Add constraint for amount of Pasture
+
+    // Add constraint for amount of Feed
+
+    // Add constraint for amount of Labor
 
 
-  // Create the solver settings
-  let settings = {
-      SolverType = SolverType.CBC
-      MaxDuration = 10000L
-      WriteLPFile = None
-  }
+    // Create the model and add the constraints
 
-  // Solve the model and save the results
 
-  printfn "--Results--"
+    // Create the solver settings
+    let settings = {
+        SolverType = SolverType.CBC
+        MaxDuration = 10000L
+        WriteLPFile = None
+    }
 
-  // Print the results of the solver
-  //match result with
-  //| Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
-  //| Optimal solution ->
-  //    printfn "Objective Value: %f" solution.ObjectiveResult
+    // Solve the model and save the results
 
-  //    for (decision, value) in solution.DecisionResults |> Map.toSeq do
-  //        let (DecisionName name) = decision.Name
-  //        printfn "Decision: %s\tValue: %f" name value
+    printfn "--Results--"
+
+    // Print the results of the solver
+    //match result with
+    //| Optimal solution -> 
+    //    printfn "Objective Value: %f" solution.ObjectiveResult
+    //    for (decision, value) in solution.DecisionResults |> Map.toSeq do
+    //        let (DecisionName name) = decision.Name
+    //        printfn "Decision: %s\tValue: %f" name value
+    //| _ -> printfn "Unable to solve."

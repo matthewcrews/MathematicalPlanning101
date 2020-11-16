@@ -64,7 +64,7 @@ let solve () =
   // Total Warehouse size must be greater than 30000 sq. ft.
   let warehouseCapacityExpr = 
     [for location in locations -> 
-      warehouseSize.[location]*roasterDecs.[location]
+      warehouseSize.[location] * roasterDecs.[location]
     ] |> List.sum
 
   let warehouseCapacityConstraint = 
@@ -98,9 +98,9 @@ let solve () =
   printfn "--Results--"
   // Print the results of the solver
   match result with
-      | Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
       | Optimal solution -> 
           printfn "Objective Value: %f" solution.ObjectiveResult
           for (decision, value) in solution.DecisionResults |> Map.toSeq do
               let (DecisionName name) = decision.Name
               printfn "Decision: %s\tValue: %f" name value
+      | _ -> printfn "Unable to solve."

@@ -4,41 +4,41 @@ open Flips
 open Flips.Types
 
 let solve () =
-  // Create a decision variable for the number of burgers below
 
-  // Create a decision variable for the number of tacos below
+    // Create a decision variable for the number of burgers below
 
-  // Create an objective expression here
+    // Create a decision variable for the number of tacos below
 
-  // Create an objective here
+    // Create an objective expression here
 
-  // Create a constraint for the max number of Burgers
+    // Create an objective here
 
-  // Create a constraint for the max number of Tacos
+    // Create a constraint for the max number of Burgers
 
-  // Create a constraint for the total weight
+    // Create a constraint for the max number of Tacos
 
-
-  // Create the model below
+    // Create a constraint for the total weight
 
 
-  let settings = {
-    SolverType = SolverType.CBC
-    MaxDuration = 10_000L
-    WriteLPFile = None
-  }
-
-  // Store result of solved model below
+    // Create the model below
 
 
-  printfn "--Result--"
+    let settings = {
+        SolverType = SolverType.CBC
+        MaxDuration = 10_000L
+        WriteLPFile = None
+    }
 
-  // Print the results of the solver below
-  //match result with
-  //| Suboptimal msg -> printfn "Unable to solve. Error: %s" msg
-  //| Optimal solution ->
-  //    printfn "Objective Value: %f" solution.ObjectiveResult
+    // Store result of solved model below
 
-  //    for (decision, value) in solution.DecisionResults |> Map.toSeq do
-  //        let (DecisionName name) = decision.Name
-  //        printfn "Decision: %s\tValue: %f" name value
+
+    printfn "--Result--"
+
+    // Print the results of the solver below
+    //match result with
+    //| Optimal solution -> 
+    //    printfn "Objective Value: %f" solution.ObjectiveResult
+    //    for (decision, value) in solution.DecisionResults |> Map.toSeq do
+    //        let (DecisionName name) = decision.Name
+    //        printfn "Decision: %s\tValue: %f" name value
+    //| _ -> printfn "Unable to solve."
