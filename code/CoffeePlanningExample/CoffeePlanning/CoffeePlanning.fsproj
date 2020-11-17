@@ -1,24 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NoWarn>NU1701;</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <NoWarn>NU1701;</NoWarn>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Domain.fs" />
-    <Compile Include="Model.fs" />
-    <Compile Include="Plan.fs" />
-  </ItemGroup>
+    <ItemGroup>
+	    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		    <_Parameter1>$(AssemblyName).Tests</_Parameter1>
+	    </AssemblyAttribute>
+	    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		    <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+	    </AssemblyAttribute>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Flips" Version="2.4.0">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+        <Compile Include="Domain.fs" />
+        <Compile Include="Model.fs" />
+        <Compile Include="Plan.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Flips" Version="2.4.0">
+            <NoWarn>NU1701</NoWarn>
+        </PackageReference>
+    </ItemGroup>
 
 </Project>
