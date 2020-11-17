@@ -37,7 +37,7 @@ module Domain =
 
         let ofConfig (c:Config) =
             {
-                Locations = c.Locations |> List.ofArray
+                Locations = c.Locations |> List.ofSeq
                 WarehouseCosts = c.WarehouseCosts :> seq<_> |> Seq.map (|KeyValue|) |> SMap
                 WarehouseCapacity = c.WarehouseCapacity :> seq<_> |> Seq.map (|KeyValue|) |> SMap
                 RoasterCosts = c.RoasterCosts :> seq<_> |> Seq.map (|KeyValue|) |> SMap
