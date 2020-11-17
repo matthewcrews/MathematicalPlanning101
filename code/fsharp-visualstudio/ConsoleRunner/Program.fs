@@ -18,7 +18,7 @@ let main argv =
     //Solutions.FoodTruck.solve ()
     //Solutions.FarmModel.solve ()
     //Solutions.RevisedFarmModel.solve ()
-    Solutions.CoffeeModel.solve ()
+    //Solutions.CoffeeModel.solve ()
     //Solutions.CoffeeModelRevised.solve ()
     //Solutions.PowerPlanning.solve ()
 

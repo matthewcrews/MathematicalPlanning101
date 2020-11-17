@@ -21,9 +21,9 @@ let solve () =
     let labor = ["cows",9.5; "pigs",8.0; "chickens",0.0] |> Map.ofList
 
     // Constants which determine the limits on our resources
-    let total_pasture = 1000.0
-    let total_feed = 100.0
-    let total_labor = 7200.0
+    let totalPasture = 1000.0
+    let totalFeed = 100.0
+    let totalLabor = 7200.0
 
 
     // Create decision variables for all of the animals
