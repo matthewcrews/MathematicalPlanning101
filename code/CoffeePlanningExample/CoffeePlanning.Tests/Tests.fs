@@ -134,3 +134,59 @@ module Tests =
             Assert.True(totalWarehouseCapacity >= parameters.MinWarehouseCapacity, "Planned Warehouse Capacity insufficient")
 
         | _ -> Assert.True(false, "Model failed to solve")
+
+    [<Fact>]
+    let ``MinRoastingCapacity constraint ensures enough capacity`` () =
+        
+        // Arrange
+        let model = 
+            Model.createBase parameters roasterDecisions warehouseDecisions
+            |> Model.addMinRoasterCapacityConstraint parameters roasterDecisions
+
+        // Act
+        let result = Solver.solve solverSettings model
+
+        // Assert
+        match result with
+        | Optimal solution ->
+            let totalRoastingCapacity = 
+                Solution.getValues solution roasterDecisions
+                |> Map.toSeq
+                |> Seq.sumBy (fun (location, value) -> warehouseCapacity.[location] * value)
+
+            Assert.True(totalRoastingCapacity >= parameters.MinRoasterCapacity, "Planned Roasting Capacity insufficient")
+
+        | _ -> Assert.True(false, "Model failed to solve")
+
+    [<Fact>]
+    let ``Warehouse planned where there is a Roaster`` () =
+        
+        // Arrange
+        let model = 
+            Model.createBase parameters roasterDecisions warehouseDecisions
+            |> Model.addMinRoasterCapacityConstraint parameters roasterDecisions
+            |> Model.addWarehouseRequiredConstraints parameters warehouseDecisions roasterDecisions
+
+        // Act
+        let result = Solver.solve solverSettings model
+
+        // Assert
+        match result with
+        | Optimal solution ->
+            let roasterLocations = 
+                Solution.getValues solution roasterDecisions
+                |> Map.toSeq
+                |> Seq.filter (fun (location, value) -> value >= 1.0)
+                |> Seq.map fst
+
+            let warehouseLocations =
+                Solution.getValues solution warehouseDecisions
+                |> Map.toSeq
+                |> Seq.filter (fun (location, value) -> value >= 1.0)
+                |> Seq.map fst
+                |> Set.ofSeq
+
+            for roasterLocation in roasterLocations do
+                Assert.True(Set.contains roasterLocation warehouseLocations, "Roaster planned without Warehouse")
+            
+        | _ -> Assert.True(false, "Model failed to solve")
