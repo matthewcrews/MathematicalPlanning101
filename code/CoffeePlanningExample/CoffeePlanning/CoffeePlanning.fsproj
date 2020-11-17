@@ -21,7 +21,7 @@
 	<ItemGroup>
         <Compile Include="Domain.fs" />
         <Compile Include="Model.fs" />
-        <Compile Include="Plan.fs" />
+        <Compile Include="Solve.fs" />
     </ItemGroup>
 
     <ItemGroup>

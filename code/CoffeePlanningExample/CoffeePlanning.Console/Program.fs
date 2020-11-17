@@ -1,7 +1,7 @@
 ﻿// Learn more about F# at http://fsharp.org
 
 open System
-open CoffeePlanning.Domain
+open CoffeePlanning
 open System.Collections.Generic
 
 
@@ -90,7 +90,7 @@ let main argv =
         MinRoasterCapacity = minRoastingCapacity
     }
 
-    let plan = CoffeePlanning.Plan.findPlan config 10_000L
+    let plan = CoffeePlanning.Solve.findPlan config 10_000L
     
     printfn "Our Plan..."
     printfn "%A" plan

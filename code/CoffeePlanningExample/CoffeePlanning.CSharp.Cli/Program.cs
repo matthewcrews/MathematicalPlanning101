@@ -12,8 +12,8 @@ namespace CoffeePlanning.CSharp.Cli
             Console.WriteLine("C# Coffee Planning Example");
 
             var configFile = "PlanConfig.json";
-            var config = JsonConvert.DeserializeObject<Domain.Config>(System.IO.File.ReadAllText(configFile));
-            var result = Plan.findPlan(config, 10000L);
+            var config = JsonConvert.DeserializeObject<Config>(System.IO.File.ReadAllText(configFile));
+            var result = Solve.findPlan(config, 10000L);
 
             var resultJson = JsonConvert.SerializeObject(result, Formatting.Indented);
             Console.WriteLine(resultJson);

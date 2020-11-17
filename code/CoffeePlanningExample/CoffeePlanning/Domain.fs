@@ -3,26 +3,27 @@
 open Flips.SliceMap
 open System.Collections.Generic
 
+// A type for external use. Typically easily maps to JSON
+type Config = {
+    Locations : array<string>
+    WarehouseCosts : Dictionary<string, float>
+    WarehouseCapacity : Dictionary<string, float>
+    RoasterCosts : Dictionary<string, float>
+    RoasterCapacity : Dictionary<string, float>
+    MinWarehouseCapacity : float
+    MinRoasterCapacity : float
+}
+
+// The type returned to external users
+type Plan = {
+    SelectedWarehouses : array<string>
+    SelectedRoasters : array<string>
+    TotalCost : float
+}
+
 module Domain =
     
-    type Location = Location of string
-
-    type Plan = {
-        SelectedWarehouses : array<string>
-        SelectedRoasters : array<string>
-        TotalCost : float
-    }
-
-    // A type for external use. Typically easily maps to JSON
-    type Config = {
-        Locations : array<string>
-        WarehouseCosts : Dictionary<string, float>
-        WarehouseCapacity : Dictionary<string, float>
-        RoasterCosts : Dictionary<string, float>
-        RoasterCapacity : Dictionary<string, float>
-        MinWarehouseCapacity : float
-        MinRoasterCapacity : float
-    }
+    type internal Location = Location of string
 
     type internal Parameters = {
         Locations : Location list
