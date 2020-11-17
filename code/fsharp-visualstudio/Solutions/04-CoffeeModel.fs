@@ -53,7 +53,7 @@ let solve () =
             "Belmont",      90000.0
         ] |> Map.ofSeq
                  
-    let warehouseSize = 
+    let warehouseCapacity = 
         [
             "Sellwood",     8000.0
             "Hawthorne",    6000.0
@@ -110,7 +110,7 @@ let solve () =
     // Total Warehouse size must be greater than 30000 sq. ft.
     let warehouseCapacityExpr = 
         [for location in locations -> 
-            warehouseSize.[location] * roasterDecs.[location]
+            warehouseCapacity.[location] * roasterDecs.[location]
         ] |> List.sum
 
     let warehouseCapacityConstraint = 

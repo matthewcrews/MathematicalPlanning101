@@ -53,7 +53,7 @@ let solve () =
             "Belmont",      90000.0
         ] |> Map.ofSeq
              
-    let warehouseSize = 
+    let warehouseCapacity = 
         [
             "Sellwood",     8000.0
             "Hawthorne",    6000.0

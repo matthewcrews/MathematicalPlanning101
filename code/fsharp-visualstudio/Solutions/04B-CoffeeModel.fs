@@ -56,7 +56,7 @@ let solve () =
             Location "Belmont",      90000.0
         ] |> SMap
                      
-    let warehouseSize = 
+    let warehouseCapacity = 
         [
             Location "Sellwood",     8000.0
             Location "Hawthorne",    6000.0
@@ -102,7 +102,7 @@ let solve () =
         Constraint.create "MinRoastingCapacity" (roasterCapacityExpr >== minRoastingCapacity)
 
     // Total Warehouse size must be greater than 30000 sq. ft.
-    let warehouseCapacityExpr = sum (warehouseSize .* warehouseDecs)
+    let warehouseCapacityExpr = sum (warehouseCapacity .* warehouseDecs)
 
     let warehouseCapacityConstraint = 
         Constraint.create "MinWarehouseSpace" (warehouseCapacityExpr >== minWarehouseCapacity)

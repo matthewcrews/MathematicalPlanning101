@@ -44,7 +44,7 @@ let solve () =
             Location "Belmont",      12.0
         ] |> SMap
                        
-    let warehouseCost = 
+    let warehouseCapacity = 
         [
             Location "Sellwood",     80000.0
             Location "Hawthorne",    90000.0
@@ -86,7 +86,7 @@ let solve () =
     // Create an expression for the cost of Warehouses
     let warehouseCostExpr = // TODO: Refactor
       [for location in locations -> 
-        warehouseCost.[location] * warehouseDecs.[location]
+        warehouseCapacity.[location] * warehouseDecs.[location]
       ] |> List.sum
 
     // Create an expression for the cost of Roasters
