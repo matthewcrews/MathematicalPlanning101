@@ -5,6 +5,10 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn>NU1701;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Domain.fs" />
     <Compile Include="Model.fs" />

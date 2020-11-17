@@ -16,14 +16,16 @@ module Plan =
 
             let selectedWarehouses =
                 Solution.getValues solution warehouseDecisions
-                |> Seq.filter (fun kvp -> kvp.Value >= 1.0)
-                |> Seq.map (fun kvp -> kvp.Key)
+                |> Seq.map (|KeyValue|)
+                |> Seq.filter (fun (location, decisionValue) -> decisionValue >= 1.0)
+                |> Seq.map (fun (Location location, decisionValue) -> location)
                 |> Array.ofSeq
 
             let selectedRoasters =
                 Solution.getValues solution roasterDecisions
-                |> Seq.filter (fun kvp -> kvp.Value >= 1.0)
-                |> Seq.map (fun kvp -> kvp.Key)
+                |> Seq.map (|KeyValue|)
+                |> Seq.filter (fun (location, decisionValue) -> decisionValue >= 1.0)
+                |> Seq.map (fun (Location location, decisionValue) -> location)
                 |> Array.ofSeq
 
             let totalCost = solution.ObjectiveResult
@@ -42,12 +44,12 @@ module Plan =
 
             let roasterDecisions =
                 DecisionBuilder "BuildRoaster" {
-                    for location in config.Locations -> Boolean
+                    for location in parameters.Locations -> Boolean
                 } |> SMap
 
             let warehouseDecisions =
                 DecisionBuilder "BuildWarehouse" {
-                    for location in config.Locations -> Boolean
+                    for location in parameters.Locations -> Boolean
                 } |> SMap
 
             let model = buildModel parameters warehouseDecisions roasterDecisions

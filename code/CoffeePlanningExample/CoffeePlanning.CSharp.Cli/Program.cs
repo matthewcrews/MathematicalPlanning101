@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using CoffeePlanning;
 
 namespace CoffeePlanning.CSharp.Cli
 {
@@ -6,7 +8,15 @@ namespace CoffeePlanning.CSharp.Cli
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Title = "C# Coffee Planning Example";
+            Console.WriteLine("C# Coffee Planning Example");
+
+            var configFile = "PlanConfig.json";
+            var config = JsonConvert.DeserializeObject<Domain.Config>(System.IO.File.ReadAllText(configFile));
+            var result = Plan.findPlan(config, 10000L);
+
+            var resultJson = JsonConvert.SerializeObject(result, Formatting.Indented);
+            Console.WriteLine(resultJson);
         }
     }
 }

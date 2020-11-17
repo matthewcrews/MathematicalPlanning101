@@ -8,18 +8,18 @@ module Domain =
     type Location = Location of string
 
     type Plan = {
-        SelectedWarehouses : array<Location>
-        SelectedRoasters : array<Location>
+        SelectedWarehouses : array<string>
+        SelectedRoasters : array<string>
         TotalCost : float
     }
 
     // A type for external use. Typically easily maps to JSON
     type Config = {
-        Locations : array<Location>
-        WarehouseCosts : Dictionary<Location, float>
-        WarehouseCapacity : Dictionary<Location, float>
-        RoasterCosts : Dictionary<Location, float>
-        RoasterCapacity : Dictionary<Location, float>
+        Locations : array<string>
+        WarehouseCosts : Dictionary<string, float>
+        WarehouseCapacity : Dictionary<string, float>
+        RoasterCosts : Dictionary<string, float>
+        RoasterCapacity : Dictionary<string, float>
         MinWarehouseCapacity : float
         MinRoasterCapacity : float
     }
@@ -38,11 +38,11 @@ module Domain =
 
         let ofConfig (c:Config) =
             {
-                Locations = c.Locations |> List.ofSeq
-                WarehouseCosts = c.WarehouseCosts :> seq<_> |> Seq.map (|KeyValue|) |> SMap
-                WarehouseCapacity = c.WarehouseCapacity :> seq<_> |> Seq.map (|KeyValue|) |> SMap
-                RoasterCosts = c.RoasterCosts :> seq<_> |> Seq.map (|KeyValue|) |> SMap
-                RoasterCapacity = c.RoasterCapacity :> seq<_> |> Seq.map (|KeyValue|) |> SMap
+                Locations = c.Locations |> Seq.map Location |> List.ofSeq
+                WarehouseCosts = c.WarehouseCosts :> seq<_> |> Seq.map (|KeyValue|) |> Seq.map (fun (k, v) -> Location k, v) |> SMap
+                WarehouseCapacity = c.WarehouseCapacity :> seq<_> |> Seq.map (|KeyValue|) |> Seq.map (fun (k, v) -> Location k, v) |> SMap
+                RoasterCosts = c.RoasterCosts :> seq<_> |> Seq.map (|KeyValue|) |> Seq.map (fun (k, v) -> Location k, v) |> SMap
+                RoasterCapacity = c.RoasterCapacity :> seq<_> |> Seq.map (|KeyValue|) |> Seq.map (fun (k, v) -> Location k, v) |> SMap
                 MinWarehouseCapacity = c.MinWarehouseCapacity
                 MinRoasterCapacity = c.MinRoasterCapacity
             }

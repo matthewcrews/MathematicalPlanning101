@@ -7,68 +7,68 @@ open System.Collections.Generic
 
 let locations = 
     [|
-        Location "Sellwood"
-        Location "Hawthorne"
-        Location "The Pearl"
-        Location "Eastmoreland"
-        Location "St. Johns"
-        Location "Alberta"
-        Location "Nob Hill"
-        Location "Belmont"
+        "Sellwood"
+        "Hawthorne"
+        "The Pearl"
+        "Eastmoreland"
+        "St. Johns"
+        "Alberta"
+        "Nob Hill"
+        "Belmont"
     |]
 
 let roasterCost = 
     [
-        Location "Sellwood",     150000.0
-        Location "Hawthorne",    100000.0
-        Location "The Pearl",    250000.0
-        Location "Eastmoreland", 120000.0
-        Location "St. Johns",    130000.0
-        Location "Alberta",      110000.0
-        Location "Nob Hill",     135000.0
-        Location "Belmont",      180000.0
+        "Sellwood",     150000.0
+        "Hawthorne",    100000.0
+        "The Pearl",    250000.0
+        "Eastmoreland", 120000.0
+        "St. Johns",    130000.0
+        "Alberta",      110000.0
+        "Nob Hill",     135000.0
+        "Belmont",      180000.0
     ]
     |> List.map KeyValuePair
     |> Dictionary
                
 let roasterCapacity = 
     [
-        Location "Sellwood",     12.0
-        Location "Hawthorne",    18.0
-        Location "The Pearl",    22.0
-        Location "Eastmoreland", 13.0
-        Location "St. Johns",    14.0
-        Location "Alberta",      10.0
-        Location "Nob Hill",     17.0
-        Location "Belmont",      12.0
+        "Sellwood",     12.0
+        "Hawthorne",    18.0
+        "The Pearl",    22.0
+        "Eastmoreland", 13.0
+        "St. Johns",    14.0
+        "Alberta",      10.0
+        "Nob Hill",     17.0
+        "Belmont",      12.0
     ]
     |> List.map KeyValuePair
     |> Dictionary
                    
 let warehouseCost = 
     [
-        Location "Sellwood",     80000.0
-        Location "Hawthorne",    90000.0
-        Location "The Pearl",    120000.0
-        Location "Eastmoreland", 90000.0
-        Location "St. Johns",    85000.0
-        Location "Alberta",      70000.0
-        Location "Nob Hill",     85000.0
-        Location "Belmont",      90000.0
+        "Sellwood",     80000.0
+        "Hawthorne",    90000.0
+        "The Pearl",    120000.0
+        "Eastmoreland", 90000.0
+        "St. Johns",    85000.0
+        "Alberta",      70000.0
+        "Nob Hill",     85000.0
+        "Belmont",      90000.0
     ] 
     |> List.map KeyValuePair
     |> Dictionary
                  
 let warehouseCapacity = 
     [
-        Location "Sellwood",     8000.0
-        Location "Hawthorne",    6000.0
-        Location "The Pearl",    12000.0
-        Location "Eastmoreland", 6000.0
-        Location "St. Johns",    7000.0
-        Location "Alberta",      9000.0
-        Location "Nob Hill",     6000.0
-        Location "Belmont",      9200.0
+        "Sellwood",     8000.0
+        "Hawthorne",    6000.0
+        "The Pearl",    12000.0
+        "Eastmoreland", 6000.0
+        "St. Johns",    7000.0
+        "Alberta",      9000.0
+        "Nob Hill",     6000.0
+        "Belmont",      9200.0
     ]
     |> List.map KeyValuePair
     |> Dictionary
