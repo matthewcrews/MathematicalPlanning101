@@ -38,6 +38,8 @@ module Plan =
             (config:Config)
             (maxDuration: int64) =
 
+            let parameters = Parameters.ofConfig config
+
             let roasterDecisions =
                 DecisionBuilder "BuildRoaster" {
                     for location in config.Locations -> Boolean
@@ -48,7 +50,7 @@ module Plan =
                     for location in config.Locations -> Boolean
                 } |> SMap
 
-            let model = buildModel config warehouseDecisions roasterDecisions
+            let model = buildModel parameters warehouseDecisions roasterDecisions
 
             let settings = {
                 SolverType = SolverType.CBC

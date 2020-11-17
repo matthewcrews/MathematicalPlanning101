@@ -8,52 +8,52 @@ open CoffeePlanning.Domain
 module Model =
 
     let internal createBase 
-        (config:Config)
+        (p: Parameters)
         (roasterDecision:SMap<Location, Decision>)
         (warehouseDecisions: SMap<Location, Decision>) =
         
-        let costExpression = sum (config.RoasterCosts .* roasterDecision) + sum (config.WarehouseCosts .* warehouseDecisions)
+        let costExpression = sum (p.RoasterCosts .* roasterDecision) + sum (p.WarehouseCosts .* warehouseDecisions)
         let objective = Objective.create "MinimizeCost" Minimize costExpression
         Model.create objective
 
     let internal addMinWarehouseCapacityConstraint 
-        (config:Config)
+        (p: Parameters)
         (warehouseDecisions: SMap<Location, Decision>)
         (model: Model.Model) =
 
         let warehouseConstraint =
-            Constraint.create "MinWarehouseCapacity" (sum (config.WarehouseCapacity .* warehouseDecisions) >== config.MinWarehouseCapacity)
+            Constraint.create "MinWarehouseCapacity" (sum (p.WarehouseCapacity .* warehouseDecisions) >== p.MinWarehouseCapacity)
 
         Model.addConstraint warehouseConstraint model
 
     let internal addMinRoasterCapacityConstraint 
-        (config:Config)
+        (p: Parameters)
         (roasterDecisions: SMap<Location, Decision>)
         (model: Model.Model) =
 
         let warehouseConstraint =
-            Constraint.create "MinWarehouseCapacity" (sum (config.RoasterCapacity .* roasterDecisions) >== config.MinRoasterCapacity)
+            Constraint.create "MinWarehouseCapacity" (sum (p.RoasterCapacity .* roasterDecisions) >== p.MinRoasterCapacity)
 
         Model.addConstraint warehouseConstraint model
 
     let internal addWarehouseRequiredConstraints 
-        (config:Config)
+        (p: Parameters)
         (warehouseDecisions: SMap<Location, Decision>)
         (roasterDecisions: SMap<Location, Decision>)
         (model: Model.Model) =
 
         let warehouseRequiredConstraints =
             ConstraintBuilder "WarehouseAndRoasterCoexist" { 
-                for location in config.Locations ->
+                for location in p.Locations ->
                 roasterDecisions.[location] <== warehouseDecisions.[location]
             }
 
         Model.addConstraints warehouseRequiredConstraints model
 
-    let internal buildModel (config:Config) (warehouseDecisions: SMap<Location, Decision>) (roasterDecisions: SMap<Location, Decision>) =
+    let internal buildModel (p: Parameters) (warehouseDecisions: SMap<Location, Decision>) (roasterDecisions: SMap<Location, Decision>) =
 
-        createBase config roasterDecisions warehouseDecisions
-        |> addMinRoasterCapacityConstraint config roasterDecisions
-        |> addMinWarehouseCapacityConstraint config warehouseDecisions
-        |> addWarehouseRequiredConstraints config roasterDecisions warehouseDecisions
+        createBase p roasterDecisions warehouseDecisions
+        |> addMinRoasterCapacityConstraint p roasterDecisions
+        |> addMinWarehouseCapacityConstraint p warehouseDecisions
+        |> addWarehouseRequiredConstraints p roasterDecisions warehouseDecisions
 

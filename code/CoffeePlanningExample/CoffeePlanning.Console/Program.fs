@@ -71,7 +71,17 @@ let minRoastingCapacity = 30.0
 let main argv =
     printfn "Hello World from F#!"
 
-    let plan = CoffeePlanning.Plan.findPlan locations warehouseCost warehouseCapacity roasterCost roasterCapacity minWarehouseCapacity minRoastingCapacity 10_000L
+    let config = {
+        Locations = locations
+        WarehouseCapacity = warehouseCapacity
+        WarehouseCosts = warehouseCost
+        RoasterCapacity = roasterCapacity
+        RoasterCosts = roasterCost
+        MinWarehouseCapacity = minWarehouseCapacity
+        MinRoasterCapacity = minRoastingCapacity
+    }
+
+    let plan = CoffeePlanning.Plan.findPlan config 10_000L
     
     printfn "Our Plan..."
     printfn "%A" plan
