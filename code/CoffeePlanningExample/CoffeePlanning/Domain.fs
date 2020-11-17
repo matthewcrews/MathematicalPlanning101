@@ -14,11 +14,11 @@ module Domain =
     }
 
     type Config = {
-        Locations : array<Location>
-        WarehouseCosts : Dictionary<Location, float>
-        WarehouseCapacity : Dictionary<Location, float>
-        RoasterCosts : Dictionary<Location, float>
-        RoasterCapacity : Dictionary<Location, float>
+        Locations : seq<Location>
+        WarehouseCosts : IDictionary<Location, float>
+        WarehouseCapacity : IDictionary<Location, float>
+        RoasterCosts : IDictionary<Location, float>
+        RoasterCapacity : IDictionary<Location, float>
         MinWarehouseCapacity : float
         MinRoasterCapacity : float
     }
