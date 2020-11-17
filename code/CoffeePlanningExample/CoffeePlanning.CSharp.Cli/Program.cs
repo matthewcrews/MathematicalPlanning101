@@ -16,6 +16,7 @@ namespace CoffeePlanning.CSharp.Cli
             var result = Solve.findPlan(config, 10000L);
 
             var resultJson = JsonConvert.SerializeObject(result, Formatting.Indented);
+            Console.WriteLine("================Result================");
             Console.WriteLine(resultJson);
         }
     }
