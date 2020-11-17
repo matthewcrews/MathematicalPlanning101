@@ -9,6 +9,7 @@ open CoffeePlanning.Model
 
 module Solve =
         
+    /// A function for taking a solution and creating a Plan type to return
     let internal buildPlan 
         (warehouseDecisions: SMap<Location, Decision>)
         (roasterDecisions: SMap<Location, Decision>)
@@ -36,6 +37,7 @@ module Solve =
             TotalCost = totalCost
         }
 
+    /// The one function that is exposed for external use
     let findPlan 
         (config:Config)
         (maxDuration: int64) =

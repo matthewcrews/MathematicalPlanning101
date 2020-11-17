@@ -21,11 +21,11 @@ type Plan = {
     TotalCost : float
 }
 
-module Domain =
+module internal Domain =
     
-    type internal Location = Location of string
+    type Location = Location of string
 
-    type internal Parameters = {
+    type Parameters = {
         Locations : Location list
         WarehouseCosts : SMap<Location, float>
         WarehouseCapacity : SMap<Location, float>
@@ -35,9 +35,10 @@ module Domain =
         MinRoasterCapacity : float
     }
 
-    module internal Parameters = 
+    module Parameters = 
 
         let ofConfig (c:Config) =
+            // This is where data validation would occur to make sure the Config data makes sense
             {
                 Locations = c.Locations |> Seq.map Location |> List.ofSeq
                 WarehouseCosts = c.WarehouseCosts :> seq<_> |> Seq.map (|KeyValue|) |> Seq.map (fun (k, v) -> Location k, v) |> SMap

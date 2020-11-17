@@ -5,9 +5,10 @@ open Flips.Types
 open Flips.SliceMap
 open CoffeePlanning.Domain
 
-module Model =
+module internal Model =
 
-    let internal createBase 
+    /// Create the base Model with just the Objective function
+    let createBase 
         (p: Parameters)
         (roasterDecision:SMap<Location, Decision>)
         (warehouseDecisions: SMap<Location, Decision>) =
@@ -16,7 +17,8 @@ module Model =
         let objective = Objective.create "MinimizeCost" Minimize costExpression
         Model.create objective
 
-    let internal addMinWarehouseCapacityConstraint 
+    /// Add constraint for Minimum Warehouse Capacity
+    let addMinWarehouseCapacityConstraint 
         (p: Parameters)
         (warehouseDecisions: SMap<Location, Decision>)
         (model: Model.Model) =
@@ -26,7 +28,8 @@ module Model =
 
         Model.addConstraint warehouseConstraint model
 
-    let internal addMinRoasterCapacityConstraint 
+    /// Add constraint for Minimum Roaster Capacity
+    let addMinRoasterCapacityConstraint 
         (p: Parameters)
         (roasterDecisions: SMap<Location, Decision>)
         (model: Model.Model) =
@@ -36,7 +39,8 @@ module Model =
 
         Model.addConstraint warehouseConstraint model
 
-    let internal addWarehouseRequiredConstraints 
+    /// Add Warehouse required wherever there is a Roaster constraints
+    let addWarehouseRequiredConstraints 
         (p: Parameters)
         (warehouseDecisions: SMap<Location, Decision>)
         (roasterDecisions: SMap<Location, Decision>)
@@ -50,7 +54,8 @@ module Model =
 
         Model.addConstraints warehouseRequiredConstraints model
 
-    let internal buildModel (p: Parameters) (warehouseDecisions: SMap<Location, Decision>) (roasterDecisions: SMap<Location, Decision>) =
+    /// Build the full model
+    let buildModel (p: Parameters) (warehouseDecisions: SMap<Location, Decision>) (roasterDecisions: SMap<Location, Decision>) =
 
         createBase p roasterDecisions warehouseDecisions
         |> addMinRoasterCapacityConstraint p roasterDecisions
