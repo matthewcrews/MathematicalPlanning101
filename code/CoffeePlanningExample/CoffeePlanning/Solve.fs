@@ -17,16 +17,16 @@ module Solve =
 
         let selectedWarehouses =
             Solution.getValues solution warehouseDecisions
-            |> Seq.map (|KeyValue|)
-            |> Seq.filter (fun (location, decisionValue) -> decisionValue >= 1.0)
-            |> Seq.map (fun (Location location, decisionValue) -> location)
+            |> Map.toSeq
+            |> Seq.filter (fun (_, decisionValue) -> decisionValue >= 1.0)
+            |> Seq.map (fun (Location location, _) -> location)
             |> Array.ofSeq
 
         let selectedRoasters =
             Solution.getValues solution roasterDecisions
-            |> Seq.map (|KeyValue|)
-            |> Seq.filter (fun (location, decisionValue) -> decisionValue >= 1.0)
-            |> Seq.map (fun (Location location, decisionValue) -> location)
+            |> Map.toSeq
+            |> Seq.filter (fun (_, decisionValue) -> decisionValue >= 1.0)
+            |> Seq.map (fun (Location location, _) -> location)
             |> Array.ofSeq
 
         let totalCost = solution.ObjectiveResult
