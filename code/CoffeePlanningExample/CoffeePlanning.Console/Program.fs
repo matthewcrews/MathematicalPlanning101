@@ -2,10 +2,11 @@
 
 open System
 open CoffeePlanning.Domain
+open System.Collections.Generic
 
 
 let locations = 
-    [
+    [|
         Location "Sellwood"
         Location "Hawthorne"
         Location "The Pearl"
@@ -14,7 +15,7 @@ let locations =
         Location "Alberta"
         Location "Nob Hill"
         Location "Belmont"
-    ]
+    |]
 
 let roasterCost = 
     [
@@ -26,7 +27,9 @@ let roasterCost =
         Location "Alberta",      110000.0
         Location "Nob Hill",     135000.0
         Location "Belmont",      180000.0
-    ] |> dict
+    ]
+    |> List.map KeyValuePair
+    |> Dictionary
                
 let roasterCapacity = 
     [
@@ -38,7 +41,9 @@ let roasterCapacity =
         Location "Alberta",      10.0
         Location "Nob Hill",     17.0
         Location "Belmont",      12.0
-    ] |> dict
+    ]
+    |> List.map KeyValuePair
+    |> Dictionary
                    
 let warehouseCost = 
     [
@@ -50,7 +55,9 @@ let warehouseCost =
         Location "Alberta",      70000.0
         Location "Nob Hill",     85000.0
         Location "Belmont",      90000.0
-    ] |> dict
+    ] 
+    |> List.map KeyValuePair
+    |> Dictionary
                  
 let warehouseCapacity = 
     [
@@ -62,7 +69,9 @@ let warehouseCapacity =
         Location "Alberta",      9000.0
         Location "Nob Hill",     6000.0
         Location "Belmont",      9200.0
-    ] |> dict
+    ]
+    |> List.map KeyValuePair
+    |> Dictionary
                  
 let minWarehouseCapacity = 30000.0
 let minRoastingCapacity = 30.0
