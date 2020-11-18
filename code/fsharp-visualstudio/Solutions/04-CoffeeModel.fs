@@ -110,7 +110,7 @@ let solve () =
     // Total Warehouse size must be greater than 30000 sq. ft.
     let warehouseCapacityExpr = 
         [for location in locations -> 
-            warehouseCapacity.[location] * roasterDecs.[location]
+            warehouseCapacity.[location] * warehouseDecs.[location]
         ] |> List.sum
 
     let warehouseCapacityConstraint = 
