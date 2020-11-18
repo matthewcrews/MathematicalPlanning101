@@ -12,6 +12,7 @@ let main argv =
     //Practice.FarmModel.solve ()
     //Practice.RevisedFarmModel.solve ()
     //Practice.CoffeeModel.solve ()
+    //Practice.CoffeeModelRevised.solve ()
     //Practice.PowerPlanning.solve ()
 
     // Solutions

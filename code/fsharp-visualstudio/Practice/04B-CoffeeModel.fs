@@ -1,4 +1,4 @@
-﻿module Solutions.CoffeeModelRevised
+﻿module Practice.CoffeeModelRevised
 
 open Flips
 open Flips.Types
