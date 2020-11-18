@@ -21,7 +21,7 @@ let main argv =
     //Solutions.RevisedFarmModel.solve ()
     //Solutions.CoffeeModel.solve ()
     //Solutions.CoffeeModelRevised.solve ()
-    Solutions.PowerPlanning.solve ()
+    //Solutions.PowerPlanning.solve ()
 
     printfn "Hit Enter to exit..."
     let r = Console.ReadLine()
