@@ -94,5 +94,7 @@ let main argv =
     
     printfn "Our Plan..."
     printfn "%A" plan
-    
+
+    printfn "Press any key to close..."
+    let _ = Console.ReadKey()
     0 // return an integer exit code

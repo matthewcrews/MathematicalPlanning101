@@ -35,7 +35,7 @@ module internal Model =
         (model: Model.Model) =
 
         let warehouseConstraint =
-            Constraint.create "MinWarehouseCapacity" (sum (p.RoasterCapacity .* roasterDecisions) >== p.MinRoasterCapacity)
+            Constraint.create "MinRoasterCapacity" (sum (p.RoasterCapacity .* roasterDecisions) >== p.MinRoasterCapacity)
 
         Model.addConstraint warehouseConstraint model
 
@@ -60,5 +60,5 @@ module internal Model =
         createBase p roasterDecisions warehouseDecisions
         |> addMinRoasterCapacityConstraint p roasterDecisions
         |> addMinWarehouseCapacityConstraint p warehouseDecisions
-        |> addWarehouseRequiredConstraints p roasterDecisions warehouseDecisions
+        |> addWarehouseRequiredConstraints p warehouseDecisions roasterDecisions 
 
