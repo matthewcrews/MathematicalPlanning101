@@ -18,6 +18,8 @@ namespace CoffeePlanning.CSharp.Cli
             var resultJson = JsonConvert.SerializeObject(result, Formatting.Indented);
             Console.WriteLine("================Result================");
             Console.WriteLine(resultJson);
+            Console.WriteLine("Press ENTER to close...");
+            Console.ReadLine();
         }
     }
 }

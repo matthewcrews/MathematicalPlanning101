@@ -27,7 +27,7 @@ let solve () =
             "Alberta",      110000.0
             "Nob Hill",     135000.0
             "Belmont",      180000.0
-        ] |> Map.ofSeq
+        ] |> Map
                
     let roasterCapacity = 
         [
@@ -39,7 +39,7 @@ let solve () =
             "Alberta",      10.0
             "Nob Hill",     17.0
             "Belmont",      12.0
-        ] |> Map.ofSeq
+        ] |> Map
                    
     let warehouseCost = 
         [
@@ -51,7 +51,7 @@ let solve () =
             "Alberta",      70000.0
             "Nob Hill",     85000.0
             "Belmont",      90000.0
-        ] |> Map.ofSeq
+        ] |> Map
                  
     let warehouseCapacity = 
         [
@@ -63,7 +63,7 @@ let solve () =
             "Alberta",      9000.0
             "Nob Hill",     6000.0
             "Belmont",      9200.0
-        ] |> Map.ofSeq
+        ] |> Map
     
     let minWarehouseCapacity = 30000.0
     let minRoastingCapacity = 30.0
@@ -72,13 +72,13 @@ let solve () =
     let roasterDecs = 
         DecisionBuilder "BuildRoaster" {
             for location in locations -> Boolean 
-        } |> Map.ofSeq
+        } |> Map
 
     // Create variables to indicate whether or not to build a Warehouse at a given location
     let warehouseDecs =
         DecisionBuilder "BuildWarehouse" {
             for location in locations -> Boolean
-        } |> Map.ofSeq
+        } |> Map
 
     // Create an expression for the cost of Warehouses
     let warehouseCostExpr = 

@@ -6,7 +6,7 @@ let indices = [1..3]
 let m1 = [for i in indices -> i, float i] |> Map.ofList
 let d1 = DecisionBuilder "Test" {
              for index in indices -> Boolean
-         } |> Map.ofSeq
+         } |> Map
 
 // What we have to do to take the product of Map values
 let sum1 = List.sum [for i in indices ->  m1.[i] * d1.[i]]

@@ -4,8 +4,8 @@ open CoffeePlanning
 
 [<EntryPoint>]
 let main argv =
-    Console.Title <- "C# Coffee Planning Example"
-    printfn "C# Coffee Planning Example"
+    Console.Title <- "F# Coffee Planning Example"
+    printfn "F# Coffee Planning Example"
 
     let configFile = "PlanConfig.json"
     let config = JsonConvert.DeserializeObject<Config>(System.IO.File.ReadAllText configFile)

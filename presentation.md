@@ -660,6 +660,10 @@ If you Build a Roaster, you must have a Warehouse
 
 ---
 
+# Data Structure for Mathematical Planning
+
+---
+
 <section data-background-image="images/math_blackboard.jpg"
          data-transition="fade">
 
@@ -833,7 +837,7 @@ for each Power Plant
 </p>
 <!-- .element: class="fragment" -->
 <p style="margin-left:2em">
-     Power Plant must be turned of if generating power
+     Power Plant must be turned on if generating power
 </p>
 <!-- .element: class="fragment" -->
 

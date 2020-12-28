@@ -9,16 +9,16 @@ let solve () =
   let animals = ["cow"; "pig"; "chicken"]
 
   // Dictionary of Revenue indexed by Animal Type
-  let revenue = ["cow", 100.0; "pig", 50.0; "chicken", 8.0] |> Map.ofList
+  let revenue = ["cow", 100.0; "pig", 50.0; "chicken", 8.0] |> Map
 
   // Dictionary of Pasture required per animal indexed by Animal Type
-  let pasture = ["cow",1.0; "pig",0.5; "chicken",0.0] |> Map.ofList
+  let pasture = ["cow",1.0; "pig",0.5; "chicken",0.0] |> Map
 
   // Dictionary of Feed required per animal indexed by Animal Type
-  let feed = ["cow",0.0; "pig",1.0; "chicken",0.1] |> Map.ofList
+  let feed = ["cow",0.0; "pig",1.0; "chicken",0.1] |> Map
 
   // Dictionary of the Labor required per animal indexed by Animal Type
-  let labor = ["cow",9.5; "pig",8.0; "chicken",0.0] |> Map.ofList
+  let labor = ["cow",9.5; "pig",8.0; "chicken",0.0] |> Map
 
   // Constants which determine the limits on our resources
   let totalPasture = 1000.0
@@ -30,8 +30,7 @@ let solve () =
   let animalDecs =
       DecisionBuilder "NumberOf" {
           for animal in animals -> Continuous (0.0, infinity)
-      }
-     |> Map.ofSeq
+      } |> Map
 
 
   // Create an objective expression
