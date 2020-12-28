@@ -1,4 +1,4 @@
-# Applied AI: Mathematical Planning
+# Introduction to Mathematical Planning
 
 By Matthew Crews
 
